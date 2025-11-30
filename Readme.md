@@ -33,7 +33,7 @@ This will load **KiTTY**'s core environment and tools (like Clink autocompletion
 
 > **💡 Pro Tip:** You should integrate `init.bat` into your terminal's startup profile for automatic loading.
 
-## \#\# Extension and Customization
+## Extension and Customization
 
 The true power of **KiTTY** lies in its extensibility. All customization is centralized within the `config` and `opt` directories.
 
@@ -66,7 +66,7 @@ Place any third-party or self-made components you wish to integrate into the `op
     2.  Create a configuration file in `config/profile.d/` (e.g., `opt_fzf.cmd`).
     3.  Use `enhance_path` to add the component's executable directory to your `PATH`.
 
-## \#\# Directory Structure Overview
+## Directory Structure Overview
 
 This is a clean yet powerful skeleton. **Always consult** the `README.md` within each directory for detailed information if you are unsure.
 
