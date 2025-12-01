@@ -1,9 +1,9 @@
 @echo off
 
 
-call "%~dp0lib_base.cmd"
-call "%%~dp0lib_console"
-set lib_path=call "%~dp0lib_path.cmd"
+call "%~dp0base.cmd"
+call "%%~dp0console"
+set lib_path=call "%~dp0path.cmd"
 
 if "%~1" == "/h" (
     %lib_base% help "%~0"

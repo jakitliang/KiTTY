@@ -1,7 +1,7 @@
 @echo off
 
-call "%~dp0lib_base.cmd"
-set lib_console=call "%~dp0lib_console.cmd"
+call "%~dp0base.cmd"
+set lib_console=call "%~dp0console.cmd"
 set ESC=
 
 :: Much faster than using "%lib_console% debug_output ..." etc.

@@ -105,13 +105,13 @@ echo                    to wrap your flag name to avoid exceed expectation.
 echo.
 echo Examples:
 echo.
-echo   These examples are expected to be written in %kitty_root%/config/user-profile.cmd
+echo   These examples are expected to be written in %kitty_root%/etc/profile.cmd
 echo   CExec evaluates the environment variable "KITTY_USER_FLAGS" and conditionally
 echo   caries out actions based on flags that are passed.
 echo.
 echo   Case 1:
 echo.
-echo   The following command in `user_profile.cmd` would execute "notepad.exe" and continue running the `user_profile.cmd`
+echo   The following command in `profile.cmd` would execute "notepad.exe" and continue running the `profile.cmd`
 echo.
 echo     "%ccall%" "/startNotepad" "start" "notepad.exe"
 echo.
@@ -121,7 +121,7 @@ echo     init.bat /startNotepad
 echo.
 echo   Case 2:
 echo.
-echo   The following command in `user_profile.cmd` would execute "notepad.exe" and stop running the `user_profile.cmd`
+echo   The following command in `profile.cmd` would execute "notepad.exe" and stop running the `profile.cmd`
 echo.
 echo     "%cexec%" NOT "/dontStartNotepad" "start" "notepad.exe"
 echo.

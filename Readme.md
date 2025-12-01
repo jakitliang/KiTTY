@@ -1,82 +1,75 @@
 
 # KiTTY
 
-> KiTTY is a Console Toolkit
+> KiTTY is a handy Console Toolkit
 
 ## Intro
 
-**KiTTY** 🐱 is more than just a set of command-line tools; it is a philosophy—a terminal approach built on extreme minimalism, efficiency, and complete freedom of customization. Tired of bloated, over-prescriptive integrated terminals? **KiTTY** is your streamlined, integrated console **toolkit**, built just for you.
+**KiTTY** 🐱 is more than just a set of command-line tools.
 
-## Core Philosophy and Features
+It is design to be a concept of minimal tty env.
 
-**KiTTY** is designed to provide a **Skeleton**, not a full-fledged **Terminal**. You retain **maximum control** over your environment.
+You can customize it your self. Using your favorite console Apps. And also adding additional libraries into.
 
-  * **🦴 Minimalist Core:** **KiTTY** prioritizes simplicity and purity. We **do not pre-package any terminal emulator** (like ConEmu, Windows Terminal, etc.). Your terminal is defined by you\!
-  * **🛠️ Highly Customizable:** All enhancements and components are designed to be plug-and-play and extensible. Enable only what you need, with zero redundancy.
-  * **🔌 Seamless Integration:** Based on the **Cmd/PowerShell** environment, a clean initialization script (`init.bat`) is all it takes to inject **KiTTY**'s core functionality into any terminal environment you choose.
+## Features
+
+Since **KiTTY** is designed to provide a **rack**, instead of a full or real **terminal**. You should fulfill your environment by your hand.
+
+* **🦴 Minimalist Core:** The original **KiTTY** provides a tiny rack.
+* **🛠️ Highly Customizable:** All enhancements and components are designed to be plug-and-play and extensible. Enable only what you need, with zero redundancy.
+* **💻 Enhencement:** `Clink` boost up an env like `bash-it` to give you enhencement experience in terminal.
+* **🔌 Seamless Integration:** Just adding something into `opt/` and export them by editing the profile in `etc/`.
 
 ## Quick Start: Activating Your KiTTY
 
-### 1\. Choose Your Terminal (Your Terminal, Your Choice)
+### Start Directly
 
-First, select a terminal emulator you prefer (e.g., Windows Terminal, Fluent Terminal, Tabby, etc.).
+Just double click `kitty.bat` and it will automatically start.
 
-### 2\. Initialize KiTTY
+### On Your Terminal
 
-In your chosen terminal, simply run the initialization script located in the **KiTTY** root directory:
+First, choose the terminal emulator you prefer (Maybe Windows Terminal, and etc.).
 
-```bash
-/path/to/kitty/init.bat
+Then setting the initialization config in your terminal:
+
+```cmd
+cmd /k C:\kitty\lib\kitty\init.bat
 ```
 
-This will load **KiTTY**'s core environment and tools (like Clink autocompletion, essential aliases, etc.) into your current Shell session.
-
-> **💡 Pro Tip:** You should integrate `init.bat` into your terminal's startup profile for automatic loading.
+> 💡 This will load **KiTTY**'s environment and tools.
 
 ## Extension and Customization
 
-The true power of **KiTTY** lies in its extensibility. All customization is centralized within the `config` and `opt` directories.
+The best way to use **KiTTY** is customization it your self.
 
-### 1\. **Enhancing Your PATH (Adding Tools to Path)**
+### 1. **Enhancing Your PATH (Adding Tools to Path)**
 
-Use `user_profile.cmd` or create custom `.cmd` files in the `profile.d\` directory to manage your environment variables.
+Edit `profile.cmd` and other `.cmd` files in the `etc\` directory to manage your environment variables.
 
-  * **Basic Usage:** Leverage the utilities provided under `%lib_path%` for convenient path manipulation.
+### 2. **Custom Themes**
 
-      * **Example:** Adding your custom tool directory `my_tool/bin`
+Edit `kitty_prompt_config.lua` to customize the terminal interface the you want.
 
-    <!-- end list -->
+### 3. **Adding Optional Components**
 
-    ```bash
-    @REM Add the my_tool/bin directory to the PATH variable
-    call "%lib_path%\enhance_path" "%kitty_root%\my_tool\bin"
-    ```
+Place any third-party or self-made components you wish to integrate into the `opt/` and `bin/` directory.
 
-### 2\. **Custom Scripts and Configurations (User Configuration)**
+* **For example:**
+  1.  Put your component (e.g., `fzf`, `neovim`, etc.) inside the `opt/` directory.
+  2.  Create a configuration file in `etc/profile.d/` (e.g., `opt_neovim.cmd`).
+  3.  Edit the `opt_neovim.cmd` and `set "PATH=%KITTY_ROOT%\opt\opt_neovim\bin;%PATH%"` to add the component's executable directory into your `PATH`.
 
-  * **`config/user_profile.cmd`:** Used for setting your environment variables, aliases, and personalized startup commands.
-  * **`config/profile.d/`:** Place all your modular configuration scripts here. For instance, create separate configuration files for tools like Git or NodeJS for easy management and toggling.
+## Directory Structure
 
-### 3\. **Adding Optional Components (`opt` Directory)**
-
-Place any third-party or self-made components you wish to integrate into the `opt/` directory.
-
-  * **Workflow:**
-    1.  Put your component (e.g., `fzf`, `neovim`, etc.) inside the `opt/` directory.
-    2.  Create a configuration file in `config/profile.d/` (e.g., `opt_fzf.cmd`).
-    3.  Use `enhance_path` to add the component's executable directory to your `PATH`.
-
-## Directory Structure Overview
-
-This is a clean yet powerful skeleton. **Always consult** the `README.md` within each directory for detailed information if you are unsure.
+This is a simple description of the structure below:
 
 | Directory | Description |
 | :--- | :--- |
-| `bin/` | Houses the core binary dependencies for **KiTTY**. |
-| `config/` | The core area for all configuration files, including `user_profile.cmd` and `profile.d/`. |
-| `etc/` | Stores essential configuration files, such as default settings for **Clink**. |
-| `lib/` | **KiTTY**'s core function library, containing utility scripts like `enhance_path`. |
-| `opt/` | The **Optional Components** area. Used for storing external tools the user chooses to load. |
+| `bin/` | binary executable or scripts put here. |
+| `etc/` | configuration files goes here. |
+| `etc/defaults/` | some essential configuration files, such as default settings for **Clink**. |
+| `lib/` | libraries goes here. |
+| `opt/` | The external components for the goes here. |
 
 ## Acknowledges
 

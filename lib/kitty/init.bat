@@ -6,7 +6,7 @@ set KITTY_INIT_START=%time%
 :: Created as part of kitty project
 
 :: !!! THIS FILE IS OVERWRITTEN WHEN KITTY IS UPDATED
-:: !!! Use "%KITTY_ROOT%\config\user_profile.cmd" to add your own startup commands
+:: !!! Use "%KITTY_ROOT%\etc\profile.cmd" to add your own startup commands
 
 :: Use /v command line arg or set to > 0 for verbose output to aid in debugging.
 if not defined verbose_output set verbose_output=0
@@ -30,7 +30,7 @@ set "KITTY_USER_FLAGS= "
 
 :: Find root dir
 if not defined KITTY_ROOT (
-    for /f "delims=" %%i in ("%~dp0") do (
+    for /f "delims=" %%i in ("%~dp0\..\..") do (
         set "KITTY_ROOT=%%~fi"
     )
 )
@@ -40,11 +40,11 @@ if "%KITTY_ROOT:~-1%" == "\" SET "KITTY_ROOT=%KITTY_ROOT:~0,-1%"
 
 :: Include libraries
 call "%kitty_root%\bin\cexec.cmd" /setpath
-call "%kitty_root%\lib\lib_console"
-call "%kitty_root%\lib\lib_base"
-call "%kitty_root%\lib\lib_path"
-call "%kitty_root%\lib\lib_git"
-call "%kitty_root%\lib\lib_profile"
+call "%kitty_root%\lib\kitty\console"
+call "%kitty_root%\lib\kitty\base"
+call "%kitty_root%\lib\kitty\path"
+call "%kitty_root%\lib\kitty\git"
+call "%kitty_root%\lib\kitty\profile"
 
 :var_loop
     if "%~1" == "" (
@@ -69,8 +69,8 @@ call "%kitty_root%\lib\lib_profile"
         if exist "%~2" (
             if not exist "%~2\bin" mkdir "%~2\bin"
             set "kitty_user_bin=%~2\bin"
-            if not exist "%~2\config\profile.d" mkdir "%~2\config\profile.d"
-            set "kitty_user_config=%~2\config"
+            if not exist "%~2\etc\profile.d" mkdir "%~2\etc\profile.d"
+            set "kitty_user_config=%~2\etc"
             shift
         )
     ) else if /i "%1" == "/user_aliases" (
@@ -109,7 +109,7 @@ if %verbose_output% gtr 0 (
 %print_debug% init.bat "Env Var - debug_output=%debug_output%"
 
 :: Set the Kitty directory paths
-set KITTY_CONFIG_DIR=%KITTY_ROOT%\config
+set KITTY_CONFIG_DIR=%KITTY_ROOT%\etc
 
 :: Check if we're using Kitty individual user profile
 if defined KITTY_USER_CONFIG (
@@ -157,13 +157,13 @@ goto :SKIP_CLINK
     :: Run Clink
     if not exist "%KITTY_CONFIG_DIR%\settings" if not exist "%KITTY_CONFIG_DIR%\clink_settings" (
         echo Generating Clink initial settings in "%KITTY_CONFIG_DIR%\clink_settings"
-        copy "%KITTY_ROOT%\etc\clink_settings.default" "%KITTY_CONFIG_DIR%\clink_settings"
+        copy "%KITTY_ROOT%\etc\default\clink_settings.default" "%KITTY_CONFIG_DIR%\clink_settings"
         echo Additional *.lua files in "%KITTY_CONFIG_DIR%" are loaded on startup.
     )
 
     if not exist "%KITTY_CONFIG_DIR%\kitty_prompt_config.lua" (
         echo Creating Kitty prompt config file: "%KITTY_CONFIG_DIR%\kitty_prompt_config.lua"
-        copy "%KITTY_ROOT%\etc\kitty_prompt_config.lua.default" "%KITTY_CONFIG_DIR%\kitty_prompt_config.lua"
+        copy "%KITTY_ROOT%\etc\default\kitty_prompt_config.lua.default" "%KITTY_CONFIG_DIR%\kitty_prompt_config.lua"
     )
 
     :: Cleanup legacy Clink Settings file
@@ -176,7 +176,7 @@ goto :SKIP_CLINK
         del "%KITTY_CONFIG_DIR%\.history"
     )
 
-    "%KITTY_ROOT%\opt\clink\clink_%clink_architecture%.exe" inject --quiet --profile "%KITTY_CONFIG_DIR%" --scripts "%KITTY_ROOT%\lib"
+    "%KITTY_ROOT%\opt\clink\clink_%clink_architecture%.exe" inject --quiet --profile "%KITTY_CONFIG_DIR%" --scripts "%KITTY_ROOT%\lib\clink"
 
     :: Check if a fatal error occurred when trying to inject Clink
     if errorlevel 2 (
@@ -218,9 +218,9 @@ if defined KITTY_USER_BIN (
     %lib_path% enhance_path_recursive "%KITTY_USER_BIN%" 0 %max_depth%
 )
 
-:: Drop *.bat and *.cmd files into "%KITTY_ROOT%\config\profile.d"
+:: Drop *.bat and *.cmd files into "%KITTY_ROOT%\etc\profile.d"
 :: to run them at startup.
-%lib_profile% run_profile_d "%KITTY_ROOT%\config\profile.d"
+%lib_profile% run_profile_d "%KITTY_ROOT%\etc\profile.d"
 if defined KITTY_USER_CONFIG (
     %lib_profile% run_profile_d "%KITTY_USER_CONFIG%\profile.d"
 )
@@ -230,10 +230,10 @@ if defined KITTY_USER_CONFIG (
 :: scripts run above by setting the 'aliases' env variable.
 ::
 :: Note: If overriding default aliases store file the aliases
-:: must also be self executing, see '.\user_aliases.cmd.default',
+:: must also be self executing, see '.\aliases.cmd.default',
 :: and be in profile.d folder.
 if not defined user_aliases (
-    set "user_aliases=%KITTY_CONFIG_DIR%\user_aliases.cmd"
+    set "user_aliases=%KITTY_CONFIG_DIR%\aliases.cmd"
 )
 
 if "%KITTY_ALIASES%" == "1" (
@@ -246,16 +246,16 @@ if "%KITTY_ALIASES%" == "1" (
     REM Make sure we have a self-extracting user_aliases.cmd file
     if not exist "%user_aliases%" (
         echo Creating initial user_aliases store in "%user_aliases%"...
-        copy "%KITTY_ROOT%\etc\user_aliases.cmd.default" "%user_aliases%"
+        copy "%KITTY_ROOT%\etc\default\aliases.cmd.default" "%user_aliases%"
     ) else (
         %lib_base% update_legacy_aliases
     )
 
     :: Update old 'user_aliases' to new self executing 'user_aliases.cmd'
-    if exist "%KITTY_ROOT%\config\aliases" (
-        echo Updating old "%KITTY_ROOT%\config\aliases" to new format...
-        type "%KITTY_ROOT%\config\aliases" >> "%user_aliases%"
-        del "%KITTY_ROOT%\config\aliases"
+    if exist "%KITTY_ROOT%\etc\aliases" (
+        echo Updating old "%KITTY_ROOT%\etc\aliases" to new format...
+        type "%KITTY_ROOT%\etc\aliases" >> "%user_aliases%"
+        del "%KITTY_ROOT%\etc\aliases"
     ) else if exist "%user_aliases%.old_format" (
         echo Updating old "%user_aliases%" to new format...
         type "%user_aliases%.old_format" >> "%user_aliases%"
@@ -279,11 +279,11 @@ if "%KITTY_CONFIGURED%" gtr "1" goto :KITTY_CONFIGURED
 if not defined HOME set "HOME=%USERPROFILE%"
 %print_debug% init.bat "Env Var - HOME=%HOME%"
 
-set "initialConfig=%KITTY_ROOT%\config\user_profile.cmd"
-if exist "%KITTY_ROOT%\config\user_profile.cmd" (
+set "initialConfig=%KITTY_ROOT%\etc\profile.cmd"
+if exist "%KITTY_ROOT%\etc\profile.cmd" (
     REM Create this file and place your own command in there
-    %print_debug% init.bat "Calling - %KITTY_ROOT%\config\user_profile.cmd"
-    call "%KITTY_ROOT%\config\user_profile.cmd"
+    %print_debug% init.bat "Calling - %KITTY_ROOT%\etc\profile.cmd"
+    call "%KITTY_ROOT%\etc\profile.cmd"
 )
 
 if defined KITTY_USER_CONFIG (
@@ -297,7 +297,7 @@ if defined KITTY_USER_CONFIG (
 
 if not exist "%initialConfig%" (
     echo Creating user startup file: "%initialConfig%"
-    copy "%KITTY_ROOT%\etc\user_profile.cmd.default" "%initialConfig%"
+    copy "%KITTY_ROOT%\etc\default\profile.cmd.default" "%initialConfig%"
 )
 
 if "%KITTY_ALIASES%" == "1" if exist "%KITTY_ROOT%\bin\alias.bat" if exist "%KITTY_ROOT%\bin\alias.cmd" (

@@ -1,8 +1,8 @@
 @echo off
 
-call "%~dp0lib_base.cmd"
-call "%%~dp0lib_console.cmd"
-set lib_git=call "%~dp0lib_git.cmd"
+call "%~dp0base.cmd"
+call "%%~dp0console.cmd"
+set lib_git=call "%~dp0git.cmd"
 
 if "%~1" == "/h" (
     %lib_base% help "%~0"

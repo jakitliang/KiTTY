@@ -1,7 +1,7 @@
 -- default script for clink, called by init.bat when injecting clink
 
 -- !!! THIS FILE IS OVERWRITTEN WHEN CMDER IS UPDATED
--- !!! Use "%KITTY_ROOT%\config\<whatever>.lua" to add your lua startup scripts
+-- !!! Use "%KITTY_ROOT%\lib\clink\<whatever>.lua" to add your lua startup scripts
 
 -- luacheck: globals CMDER_SESSION
 -- luacheck: globals uah_color cwd_color lamb_color clean_color dirty_color conflict_color unknown_color
@@ -692,7 +692,7 @@ for _,lua_module in ipairs(clink.find_files(completions_dir..'*.lua')) do
 end
 
 if clink.get_env('CMDER_USER_CONFIG') then
-    local cmder_config_dir = clink.get_env('KITTY_ROOT')..'/config/'
+    local cmder_config_dir = clink.get_env('KITTY_ROOT')..'/etc/'
     for _,lua_module in ipairs(clink.find_files(cmder_config_dir..'*.lua')) do
         local filename = cmder_config_dir..lua_module
         -- use dofile instead of require because require caches loaded modules

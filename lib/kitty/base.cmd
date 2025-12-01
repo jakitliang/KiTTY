@@ -1,6 +1,6 @@
 @echo off
 
-set lib_base=call "%~dp0lib_base.cmd"
+set lib_base=call "%~dp0base.cmd"
 
 if "%~1" == "/h" (
     %lib_base% help "%~0"
@@ -80,10 +80,10 @@ exit /b
         echo Creating initial user_aliases store in "%user_aliases%"...
         if defined KITTY_USER_CONFIG (
             copy "%user_aliases%" "%user_aliases%.old_format"
-            copy "%KITTY_ROOT%\etc\user_aliases.cmd.default" "%user_aliases%"
+            copy "%KITTY_ROOT%\etc\default\aliases.cmd.default" "%user_aliases%"
         ) else (
             copy "%user_aliases%" "%user_aliases%.old_format"
-            copy "%KITTY_ROOT%\etc\user_aliases.cmd.default" "%user_aliases%"
+            copy "%KITTY_ROOT%\etc\default\aliases.cmd.default" "%user_aliases%"
         )
     )
     exit /b

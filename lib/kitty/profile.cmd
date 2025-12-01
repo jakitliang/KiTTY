@@ -1,8 +1,8 @@
 @echo off
 
-call "%~dp0lib_base.cmd"
-call "%%~dp0lib_console"
-set lib_profile=call "%~dp0lib_profile.cmd"
+call "%~dp0base.cmd"
+call "%%~dp0console"
+set lib_profile=call "%~dp0profile.cmd"
 
 if "%~1" == "/h" (
     %lib_base% help "%~0"

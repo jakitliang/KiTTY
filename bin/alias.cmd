@@ -2,7 +2,7 @@
 
 
 if "%ALIASES%" == "" (
-  set ALIASES="%CMDER_ROOT%\config\user_aliases.cmd"
+  set ALIASES="%CMDER_ROOT%\etc\aliases.cmd"
 )
 
 setlocal enabledelayedexpansion
@@ -56,7 +56,7 @@ goto parseargument
 
 rem #endregion parseargument
 
-if "%ALIASES%" neq "%CMDER_ROOT%\config\user_aliases.cmd" (
+if "%ALIASES%" neq "%CMDER_ROOT%\etc\aliases.cmd" (
   set _x=!_x:/f "%ALIASES%" =!
 
   if not exist "%ALIASES%" (
@@ -126,9 +126,9 @@ echo.  Note: Options MUST precede the alias definition.
 echo.
 echo.  /d [alias]     Delete an [alias].
 echo.  /f [macrofile] Path to the [macrofile] you want to store the new alias in.
-echo.                 Default: %kitty_root%\config\user_aliases.cmd
+echo.                 Default: %kitty_root%\etc\aliases.cmd
 echo.  /reload        Reload the aliases file.  Can be used with /f argument.
-echo.                 Default: %kitty_root%\config\user_aliases.cmd
+echo.                 Default: %kitty_root%\etc\aliases.cmd
 echo.
 echo. If alias is called with no parameters, it will display the list of existing
 echo. aliases.
