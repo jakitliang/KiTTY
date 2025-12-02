@@ -102,4 +102,4 @@ goto :var_loop
 :PATH_ENHANCE
 %lib_path% enhance_path "%KITTY_ROOT%\bin"
 
-bash --login
+busybox bash --login

@@ -317,6 +317,8 @@ if "%KITTY_ALIASES%" == "1" if exist "%KITTY_ROOT%\bin\alias.bat" if exist "%KIT
 
 set initialConfig=
 
+title KiTTY
+
 :KITTY_CONFIGURED
 if not defined KITTY_CONFIGURED set KITTY_CONFIGURED=1
 

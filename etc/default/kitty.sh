@@ -22,7 +22,8 @@ function getSimpleGitBranch() {
   esac
 }
 
-PS1='\[\033[01;32m\]\w'
+PS1="\[\e]0;KiTTY - \w\a\]"
+PS1="$PS1"'\[\033[01;32m\]\w'
 PS1="$PS1"'\[\033[37;1m\]'
 PS1="$PS1"'`getSimpleGitBranch`'
 PS1="$PS1"'\n\[\033[90m\]\$\[\033[00m\] '
