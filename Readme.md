@@ -3,6 +3,8 @@
 
 > KiTTY is a handy Console Toolkit
 
+<img width="634" height="373" alt="cmd_show" src="https://github.com/user-attachments/assets/7e3d0165-5850-4846-a9c6-3e29eeb061b5" />
+
 ## Intro
 
 **KiTTY** 🐱 is more than just a set of command-line tools.
