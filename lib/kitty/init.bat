@@ -57,6 +57,8 @@ call "%kitty_root%\lib\kitty\profile"
         set verbose_output=1
     ) else if /i "%1" == "/d" (
         set debug_output=1
+    ) else if /i "%1" == "/unicode" (
+        chcp 65001 >nul
     ) else if /i "%1" == "/max_depth" (
         if "%~2" geq "1" if "%~2" leq "5" (
             set "max_depth=%~2"

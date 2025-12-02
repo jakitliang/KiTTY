@@ -6,10 +6,10 @@
 ;= Add aliases below here
 e.=explorer .
 gl=git log --oneline --all --graph --decorate  $*
-l=ls --show-control-chars -CFGNhp --color --ignore={"NTUSER.DAT*","ntuser.dat*"} $*
-ls=ls --show-control-chars -F --color $*
-pwd=cd
-clear=cls
+;= l=ls --show-control-chars -CFGNhp --color --ignore={"NTUSER.DAT*","ntuser.dat*"} $*
+;= ls=ls --show-control-chars -F --color $*
+;= pwd=cd
+;= clear=cls
 unalias=alias /d $1
 vi=vim $*
 kittyr=cd /d "%KITTY_ROOT%"
